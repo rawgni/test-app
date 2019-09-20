@@ -8,7 +8,7 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v1
       - name: golangci-lint
-        uses: docker://reviewdog/action-golangci-lint:v1.17.1 # Pre-built image
+        uses: docker://reviewdog/action-golangci-lint:v1 # Pre-built image
         with:
           github_token: ${{ secrets.github_token }}
           # Can pass --config flag to change golangci-lint behavior and target
