@@ -8,4 +8,4 @@ jobs:
     - name: curl
       uses: wei/curl@master
       with:
-        args: -X POST https://ec6369d4.ngrok.io/webhooks repo=${{ GITHUB_REPOSITORY }} ref=${{ GITHUB_REF }}
+        args: -X POST https://ec6369d4.ngrok.io/webhooks data={{ github.event }}
