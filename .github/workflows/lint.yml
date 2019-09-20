@@ -1,16 +1,11 @@
 name: lint
 on: [pull_request]
 jobs:
-  golangci-lint:
+  lint:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v1
-      - name: golangci-lint
-        uses: docker://reviewdog/action-golangci-lint:v1 # Pre-built image
-        with:
-          github_token: ${{ secrets.github_token }}
-          # Can pass --config flag to change golangci-lint behavior and target
-          # directory.
-          golangci_lint_flags: "--config=.github/.golangci.yml"
+    - name: curl
+      uses: wei/curl@master
+      with:
+        args: -X POST https://ec6369d4.ngrok.io/webhooks repo=${{ GITHUB_REPOSITORY }} ref=${{ GITHUB_REF }}
