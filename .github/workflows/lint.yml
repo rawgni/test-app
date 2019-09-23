@@ -8,4 +8,4 @@ jobs:
     - name: curl
       uses: wei/curl@master
       with:
-        args: -X POST https://ec6369d4.ngrok.io/webhooks -H 'Content-Type:application/json' -d \"${{toJson(github.event)}}\"
+        args: -X POST https://ec6369d4.ngrok.io/webhooks -H 'Content-Type:application/json' -d \'${{toJson(github.event)}}'
