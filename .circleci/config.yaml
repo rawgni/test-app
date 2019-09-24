@@ -1,18 +1,19 @@
 version: 2
 jobs:
   unit-test:
-    working_directory: /go/src/github.com/rawngi/test-app
+    working_directory: /go/src/github.com/rawgni/test-app
     docker:
       - image: circleci/golang:1.10
     steps:
       - checkout
       - run: 'curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b $(go env GOPATH)/bin'
+      - run: 'curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.19.0'
       - run:
           name: install dep
           command: |
-            go get github.com/golang/dep github.com/golangci/golangci-lint
+            go get github.com/golang/dep
             cd go
-            dep ensure --vendor-only
+            dep ensure --vendor-only -v
       - run:
           name: Running test
           command: |
