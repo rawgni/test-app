@@ -1,16 +1,26 @@
-executors:
-  golang:
+version: 2
+jobs:
+  unit-test:
+    working_directory: /go/src/github.com/rawngi/test-app
     docker:
-      - image: 'circleci/golang:1.10'
-      
-orbs:
-  reviewdog: timakin/reviewdog@volatile
-  
-version: 2.1
-
+      - image: circleci/golang:1.10
+    steps:
+      - checkout
+      - run: 'curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b $(go env GOPATH)/bin'
+      - run:
+          name: install dep
+          command: |
+            go get github.com/golang/dep github.com/golangci/golangci-lint
+            cd go
+            dep ensure --vendor-only
+      - run:
+          name: Running test
+          command: |
+            go test ./... -race -cover
+            golangci-lint --out-format line-number ./... | reviewdog 
+            
 workflows:
-  build:
+  version: 2
+  build-workflow:
     jobs:
-      - reviewdog/review:
-          executor: golang
-          linters: golang.org/x/lint/golint github.com/kisielk/errcheck
+      - unit-test
