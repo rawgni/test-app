@@ -1,0 +1,16 @@
+executors:
+  golang:
+    docker:
+      - image: 'circleci/golang:1.10'
+      
+orbs:
+  reviewdog: timakin/reviewdog@volatile
+  
+version: 2.1
+
+workflows:
+  build:
+    jobs:
+      - reviewdog/review:
+          executor: golang
+          linters: golang.org/x/lint/golint github.com/kisielk/errcheck
